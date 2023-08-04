@@ -1,7 +1,34 @@
 .trello {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   display: flex;
-  flex-wrap: wrap;
+  padding: 15px;
+  gap: 15px;
+  background-color: #388bff;
 }
 
 .trello-list {
+  width: 300px;
+  background-color: lightgray;
+  border-radius: 10px;
+}
+
+.trello-list h2 {
+  margin: 0;
+  font-size: 14px;
+  padding-left: 10px;
+  align-self: center;
+}
+
+.list-header {
+  /*box-sizing: border-box;*/
+  display: flex;
+  width: 100%;
+  height: 40px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.noshow {
+  display: none;
 }

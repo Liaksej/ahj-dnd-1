@@ -13,10 +13,8 @@
       <div class="list-header">
         <div class="list-header-target"></div>
         <h2 class="list-header-name-assist">ВХОДЯЩИЕ ЗАДАЧИ</h2>
-        <textarea class="noshow list-header-name mod-list-name js-list-name-input" aria-label="Backlog"
-                  spellcheck="false"
-                  dir="auto" maxlength="512" data-autosize="true"
-                  style="overflow: hidden; overflow-wrap: break-word; height: 28px;">Backlog</textarea>
+        <textarea class="noshow" spellcheck="false" dir="auto" maxlength="512" data-autosize="true"
+                  >Backlog</textarea>
         <div class="list-header-extras"><span class="list-header-extras-subscribe js-list-subscribed hide">
           <div class="icon-sm icon-subscribe mod-quiet"></div></span>
           <span class="list-header-extras-limit-badge js-list-limit-badge hide"></span>
@@ -28,49 +26,29 @@
         <p class="noshow list-header-num-cards hide js-num-cards">0 карточек</p>
       </div>
       <div class="list-cards">
+        <div class="cards-room"></div>
         <div class="card-composer">
-          <div class="list-card js-composer">
+          <div class="list-card js-composer noshow">
             <div class="list-card-details u-clearfix">
               <div class="list-card-labels u-clearfix js-list-card-composer-labels"></div>
-              <textarea class="noshow list-card-composer-textarea js-card-title" dir="auto"
+              <textarea class="list-card-composer-textarea js-card-title" dir="auto"
                         placeholder="Ввести заголовок для этой карточки" data-autosize="true"
                         style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 60px;"></textarea>
               <div class="list-card-members js-list-card-composer-members"></div>
             </div>
           </div>
-          <div class="cc-controls u-clearfix">
-            <div class="cc-controls-section"><input
-              class="nch-button nch-button--primary confirm mod-compact js-add-card" type="submit"
-              value="Добавить карточку"><a class="icon-lg icon-close dark-hover js-cancel" href="#"></a></div>
+          <div class="finish-add-card-btn noshow">
+            <div class="cc-controls-section">
+              <button class="add-btn" type="submit">Добавить карточку</button>
+              <button class="cancel-btn" type="submit"></button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card-composer-container js-card-composer-container"><a
-        class="open-card-composer js-open-card-composer" href="#"><span class="icon-sm icon-add"></span><span
-        class="js-add-a-card">Добавить карточку</span></a>
-        <div class="js-card-templates-button card-templates-button">
-          <div class="js-react-root">
-            <button class="xJM_gd_GpGM0yl bxgKMAm3lq5BpA iUcMblFAuq9LKn HAVwIqCeMHpVKh SEj5vUdI3VvxDc" type="button"
-                    data-testid="card-template-list-button" aria-label="Создать по шаблону…"><span
-              class="nch-icon A3PtEe1rGIm_yL neoUEAwI0GETBQ fAvkXZrzkeHLoc"><span data-testid="TemplateCardIcon"
-                                                                                  aria-hidden="true" class="css-snhnyn"
-                                                                                  style="--icon-primary-color: var(--ds-text-accent-gray-bolder, #172B4D); --icon-secondary-color: inherit;"><svg
-              width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"><path
-              d="M3 6V5C3 3.89543 3.89543 3 5 3H6C6.55228 3 7 3.44772 7 4C7 4.55228 6.55228 5 6 5H5V6C5 6.55228 4.55228 7 4 7C3.44772 7 3 6.55228 3 6Z"
-              fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd"
-                                               d="M6 8C6 6.89543 6.89543 6 8 6H19C20.1046 6 21 6.89543 21 8V18C21 19.1046 20.1046 20 19 20H8C6.89543 20 6 19.1046 6 18V8ZM8 8H19V14H8V8ZM18 18C17.4477 18 17 17.5523 17 17C17 16.4477 17.4477 16 18 16C18.5523 16 19 16.4477 19 17C19 17.5523 18.5523 18 18 18ZM8 17C8 17.5523 8.44772 18 9 18H12C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16H9C8.44772 16 8 16.4477 8 17Z"
-                                               fill="currentColor"></path><path
-              d="M4 14C3.44772 14 3 14.4477 3 15V16C3 17.1046 3.89543 18 5 18V15C5 14.4477 4.55228 14 4 14Z"
-              fill="currentColor"></path><path
-              d="M3 9C3 8.44772 3.44772 8 4 8C4.55228 8 5 8.44772 5 9V12C5 12.5523 4.55228 13 4 13C3.44772 13 3 12.5523 3 12V9Z"
-              fill="currentColor"></path><path
-              d="M8 4C8 3.44772 8.44772 3 9 3H13C13.5523 3 14 3.44772 14 4C14 4.55228 13.5523 5 13 5H9C8.44772 5 8 4.55228 8 4Z"
-              fill="currentColor"></path><path
-              d="M16 3C15.4477 3 15 3.44772 15 4C15 4.55228 15.4477 5 16 5H19C19 3.89543 18.1046 3 17 3H16Z"
-              fill="currentColor"></path></svg></span></span></button>
-          </div>
-        </div>
+      <div class="card-composer-container js-card-composer-container">
+        <a class="open-card-composer js-open-card-composer" href="#"><span class="icon-sm icon-add">
+          </span>+&nbsp;<span class="js-add-a-card">Добавить карточку</span>
+        </a>
       </div>
     </div>
   </div>
@@ -79,15 +57,22 @@
       <div class="list-header">
         <div class="list-header-target"></div>
         <h2 class="list-header-name-assist">ВХОДЯЩИЕ ЗАДАЧИ</h2>
-        <textarea class="noshow list-header-name mod-list-name js-list-name-input" aria-label="Backlog"
-                  spellcheck="false"
-                  dir="auto" maxlength="512" data-autosize="true"
-                  style="overflow: hidden; overflow-wrap: break-word; height: 28px;">Backlog</textarea>
+        <textarea class="noshow" spellcheck="false" dir="auto" maxlength="512" data-autosize="true"
+                  >Backlog</textarea>
+        <div class="list-header-extras"><span class="list-header-extras-subscribe js-list-subscribed hide">
+          <div class="icon-sm icon-subscribe mod-quiet"></div></span>
+          <span class="list-header-extras-limit-badge js-list-limit-badge hide"></span>
+          <a class="list-header-extras-menu js-open-list-menu icon-sm icon-overflow-menu-horizontal" href="#"
+             aria-label="Действия со списком">
+            <div></div>
+          </a>
+        </div>
         <p class="noshow list-header-num-cards hide js-num-cards">0 карточек</p>
       </div>
       <div class="list-cards">
+        <div class="cards-room"></div>
         <div class="card-composer">
-          <div class="list-card js-composer">
+          <div class="list-card js-composer noshow">
             <div class="list-card-details u-clearfix">
               <div class="list-card-labels u-clearfix js-list-card-composer-labels"></div>
               <textarea class="noshow list-card-composer-textarea js-card-title" dir="auto"
@@ -96,39 +81,17 @@
               <div class="list-card-members js-list-card-composer-members"></div>
             </div>
           </div>
-          <div class="cc-controls u-clearfix">
-            <div class="cc-controls-section"><input
-              class="nch-button nch-button--primary confirm mod-compact js-add-card" type="submit"
-              value="Добавить карточку"><a class="icon-lg icon-close dark-hover js-cancel" href="#"></a></div>
+          <div class="finish-add-card-btn noshow">
+            <div class="cc-controls-section">
+              <button class="" type="submit">Добавить карточку</button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card-composer-container js-card-composer-container"><a
-        class="open-card-composer js-open-card-composer" href="#"><span class="icon-sm icon-add"></span><span
-        class="js-add-a-card">Добавить карточку</span></a>
-        <div class="js-card-templates-button card-templates-button">
-          <div class="js-react-root">
-            <button class="xJM_gd_GpGM0yl bxgKMAm3lq5BpA iUcMblFAuq9LKn HAVwIqCeMHpVKh SEj5vUdI3VvxDc" type="button"
-                    data-testid="card-template-list-button" aria-label="Создать по шаблону…"><span
-              class="nch-icon A3PtEe1rGIm_yL neoUEAwI0GETBQ fAvkXZrzkeHLoc"><span data-testid="TemplateCardIcon"
-                                                                                  aria-hidden="true" class="css-snhnyn"
-                                                                                  style="--icon-primary-color: var(--ds-text-accent-gray-bolder, #172B4D); --icon-secondary-color: inherit;"><svg
-              width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"><path
-              d="M3 6V5C3 3.89543 3.89543 3 5 3H6C6.55228 3 7 3.44772 7 4C7 4.55228 6.55228 5 6 5H5V6C5 6.55228 4.55228 7 4 7C3.44772 7 3 6.55228 3 6Z"
-              fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd"
-                                               d="M6 8C6 6.89543 6.89543 6 8 6H19C20.1046 6 21 6.89543 21 8V18C21 19.1046 20.1046 20 19 20H8C6.89543 20 6 19.1046 6 18V8ZM8 8H19V14H8V8ZM18 18C17.4477 18 17 17.5523 17 17C17 16.4477 17.4477 16 18 16C18.5523 16 19 16.4477 19 17C19 17.5523 18.5523 18 18 18ZM8 17C8 17.5523 8.44772 18 9 18H12C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16H9C8.44772 16 8 16.4477 8 17Z"
-                                               fill="currentColor"></path><path
-              d="M4 14C3.44772 14 3 14.4477 3 15V16C3 17.1046 3.89543 18 5 18V15C5 14.4477 4.55228 14 4 14Z"
-              fill="currentColor"></path><path
-              d="M3 9C3 8.44772 3.44772 8 4 8C4.55228 8 5 8.44772 5 9V12C5 12.5523 4.55228 13 4 13C3.44772 13 3 12.5523 3 12V9Z"
-              fill="currentColor"></path><path
-              d="M8 4C8 3.44772 8.44772 3 9 3H13C13.5523 3 14 3.44772 14 4C14 4.55228 13.5523 5 13 5H9C8.44772 5 8 4.55228 8 4Z"
-              fill="currentColor"></path><path
-              d="M16 3C15.4477 3 15 3.44772 15 4C15 4.55228 15.4477 5 16 5H19C19 3.89543 18.1046 3 17 3H16Z"
-              fill="currentColor"></path></svg></span></span></button>
-          </div>
-        </div>
+      <div class="card-composer-container js-card-composer-container">
+        <a class="open-card-composer js-open-card-composer" href="#"><span class="icon-sm icon-add">
+          </span><span class="js-add-a-card">Добавить карточку</span>
+        </a>
       </div>
     </div>
   </div>
@@ -137,13 +100,20 @@
       <div class="list-header">
         <div class="list-header-target"></div>
         <h2 class="list-header-name-assist">ВХОДЯЩИЕ ЗАДАЧИ</h2>
-        <textarea class="noshow list-header-name mod-list-name js-list-name-input" aria-label="Backlog"
-                  spellcheck="false"
-                  dir="auto" maxlength="512" data-autosize="true"
-                  style="overflow: hidden; overflow-wrap: break-word; height: 28px;">Backlog</textarea>
+        <textarea class="noshow" spellcheck="false" dir="auto" maxlength="512" data-autosize="true"
+                  >Backlog</textarea>
+        <div class="list-header-extras"><span class="list-header-extras-subscribe js-list-subscribed hide">
+          <div class="icon-sm icon-subscribe mod-quiet"></div></span>
+          <span class="list-header-extras-limit-badge js-list-limit-badge hide"></span>
+          <a class="list-header-extras-menu js-open-list-menu icon-sm icon-overflow-menu-horizontal" href="#"
+             aria-label="Действия со списком">
+            <div></div>
+          </a>
+        </div>
         <p class="noshow list-header-num-cards hide js-num-cards">0 карточек</p>
       </div>
       <div class="list-cards">
+        <div class="cards-room"></div>
         <div class="card-composer">
           <div class="list-card js-composer">
             <div class="list-card-details u-clearfix">
@@ -154,39 +124,17 @@
               <div class="list-card-members js-list-card-composer-members"></div>
             </div>
           </div>
-          <div class="cc-controls u-clearfix">
-            <div class="cc-controls-section"><input
-              class="nch-button nch-button--primary confirm mod-compact js-add-card" type="submit"
-              value="Добавить карточку"><a class="icon-lg icon-close dark-hover js-cancel" href="#"></a></div>
+          <div class="finish-add-card-btn noshow">
+            <div class="cc-controls-section">
+              <button class="" type="submit">Добавить карточку</button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card-composer-container js-card-composer-container"><a
-        class="open-card-composer js-open-card-composer" href="#"><span class="icon-sm icon-add"></span><span
-        class="js-add-a-card">Добавить карточку</span></a>
-        <div class="js-card-templates-button card-templates-button">
-          <div class="js-react-root">
-            <button class="xJM_gd_GpGM0yl bxgKMAm3lq5BpA iUcMblFAuq9LKn HAVwIqCeMHpVKh SEj5vUdI3VvxDc" type="button"
-                    data-testid="card-template-list-button" aria-label="Создать по шаблону…"><span
-              class="nch-icon A3PtEe1rGIm_yL neoUEAwI0GETBQ fAvkXZrzkeHLoc"><span data-testid="TemplateCardIcon"
-                                                                                  aria-hidden="true" class="css-snhnyn"
-                                                                                  style="--icon-primary-color: var(--ds-text-accent-gray-bolder, #172B4D); --icon-secondary-color: inherit;"><svg
-              width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"><path
-              d="M3 6V5C3 3.89543 3.89543 3 5 3H6C6.55228 3 7 3.44772 7 4C7 4.55228 6.55228 5 6 5H5V6C5 6.55228 4.55228 7 4 7C3.44772 7 3 6.55228 3 6Z"
-              fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd"
-                                               d="M6 8C6 6.89543 6.89543 6 8 6H19C20.1046 6 21 6.89543 21 8V18C21 19.1046 20.1046 20 19 20H8C6.89543 20 6 19.1046 6 18V8ZM8 8H19V14H8V8ZM18 18C17.4477 18 17 17.5523 17 17C17 16.4477 17.4477 16 18 16C18.5523 16 19 16.4477 19 17C19 17.5523 18.5523 18 18 18ZM8 17C8 17.5523 8.44772 18 9 18H12C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16H9C8.44772 16 8 16.4477 8 17Z"
-                                               fill="currentColor"></path><path
-              d="M4 14C3.44772 14 3 14.4477 3 15V16C3 17.1046 3.89543 18 5 18V15C5 14.4477 4.55228 14 4 14Z"
-              fill="currentColor"></path><path
-              d="M3 9C3 8.44772 3.44772 8 4 8C4.55228 8 5 8.44772 5 9V12C5 12.5523 4.55228 13 4 13C3.44772 13 3 12.5523 3 12V9Z"
-              fill="currentColor"></path><path
-              d="M8 4C8 3.44772 8.44772 3 9 3H13C13.5523 3 14 3.44772 14 4C14 4.55228 13.5523 5 13 5H9C8.44772 5 8 4.55228 8 4Z"
-              fill="currentColor"></path><path
-              d="M16 3C15.4477 3 15 3.44772 15 4C15 4.55228 15.4477 5 16 5H19C19 3.89543 18.1046 3 17 3H16Z"
-              fill="currentColor"></path></svg></span></span></button>
-          </div>
-        </div>
+      <div class="card-composer-container js-card-composer-container">
+        <a class="open-card-composer js-open-card-composer" href="#"><span class="icon-sm icon-add">
+          </span><span class="js-add-a-card">Добавить карточку</span>
+        </a>
       </div>
     </div>
   </div>

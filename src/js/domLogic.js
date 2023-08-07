@@ -3,6 +3,7 @@ export class DomLogic {
     this.lists = document.querySelectorAll(".trello-list");
     this.headers = document.querySelectorAll(".list-header");
     this.addCardLinks = document.querySelectorAll(".open-card-composer");
+    this.cards = document.querySelectorAll(".cards-room");
   }
 
   headerEvents() {
@@ -113,6 +114,66 @@ export class DomLogic {
         .querySelector(".finish-add-card-btn .add-btn")
         ?.addEventListener("mousedown", addCardButtonEventHandler);
     });
+  }
+
+  cardDrag() {
+    let actualElement;
+
+    let mouseDownX = 0,
+      mouseDownY = 0;
+
+    Array.from(this.cards).forEach((cardsContainer) => {
+      cardsContainer.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        if (e.target.classList.contains("card")) {
+          actualElement = e.target;
+        }
+        if (e.target.closest(".card")) {
+          actualElement = e.target.closest(".card");
+        }
+
+        mouseDownX = e.clientX - actualElement.getBoundingClientRect().left;
+        mouseDownY = e.clientY - actualElement.getBoundingClientRect().top;
+
+        actualElement.classList.add("dragged");
+
+        document.documentElement.addEventListener("mouseup", onMouseUpHandler);
+        document.documentElement.addEventListener(
+          "mousemove",
+          onMouseOverHandler,
+        );
+      });
+    });
+
+    const onMouseOverHandler = (e) => {
+      if (actualElement) {
+        actualElement.style.top = `${e.clientY - mouseDownY}px`;
+        actualElement.style.left = `${e.clientX - mouseDownX}px`;
+      }
+    };
+
+    const onMouseUpHandler = (e) => {
+      if (e.target.closest(".trello-list")) {
+        e.target
+          .closest(".trello-list")
+          .querySelector(".cards-room")
+          .appendChild(actualElement);
+      }
+
+      actualElement.classList.remove("dragged");
+      actualElement.style.top = "";
+      actualElement.style.left = "";
+
+      actualElement = undefined;
+      mouseDownX = 0;
+      mouseDownY = 0;
+
+      document.documentElement.removeEventListener(
+        "mousemove",
+        onMouseOverHandler,
+      );
+      document.documentElement.removeEventListener("mouseup", onMouseUpHandler);
+    };
   }
 
   _cardCreator(list, text) {

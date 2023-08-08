@@ -59,12 +59,19 @@
 }
 
 .card,
-.list-card textarea {
+.list-card textarea,
+#dragMarker {
   width: 280px;
   background-color: #fff;
   border-radius: 10px;
   padding: 5px;
   box-shadow: 3px 3px 3px #dddddd;
+}
+
+#dragMarker {
+  background-color: darkgrey;
+  box-shadow: unset;
+  box-shadow: unset;
 }
 
 .open-card-composer {
@@ -109,12 +116,18 @@
   padding: 10px;
 }
 
+.finish-add-card-btn .cancel-btn {
+  background-color: transparent;
+}
+
 .finish-add-card-btn .cancel-btn::before {
-  content: "\2716";
+  color: gray;
+  content: " \2716 ";
 }
 
 .dragged {
+  width: 270px;
   position: absolute;
-  box-shadow: none;
+  box-shadow: unset;
   cursor: grab;
 }

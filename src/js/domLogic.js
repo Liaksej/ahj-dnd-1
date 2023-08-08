@@ -117,8 +117,7 @@ export class DomLogic {
 
   cardDrag() {
     let actualElement;
-
-    let elementBelow;
+    let marker;
 
     let mouseDownX = 0,
       mouseDownY = 0;
@@ -137,12 +136,22 @@ export class DomLogic {
             actualElement = e.target.closest(".card");
           }
 
+          const cardsRoom = e.target
+            ?.closest(".list-content")
+            ?.querySelector(".cards-room");
+
+          marker = document.createElement("div");
+          marker.id = "dragMarker";
+          marker.style.height = `${actualElement?.offsetHeight - 10}px`;
+
           if (actualElement) {
-            mouseDownX =
-              e.clientX - actualElement?.getBoundingClientRect().left;
-            mouseDownY = e.clientY - actualElement?.getBoundingClientRect().top;
+            mouseDownX = e.clientX - actualElement.getBoundingClientRect().left;
+            mouseDownY = e.clientY - actualElement.getBoundingClientRect().top;
+
+            document.body.style.cursor = "grab";
 
             actualElement.classList.add("dragged");
+            cardsRoom.insertBefore(marker, actualElement);
 
             document.documentElement.addEventListener(
               "mouseup",
@@ -158,28 +167,79 @@ export class DomLogic {
     );
 
     const onMouseMoveHandler = (e) => {
+      e.preventDefault();
+
       if (actualElement) {
         actualElement.style.top = `${e.clientY - mouseDownY}px`;
         actualElement.style.left = `${e.clientX - mouseDownX}px`;
+
+        actualElement.style.pointerEvents = "none";
+
+        const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
+
+        const cardsRoom = elementBelow
+          ?.closest(".list-content")
+          ?.querySelector(".cards-room");
+
+        actualElement.style.pointerEvents = "auto";
+
+        if (cardsRoom) {
+          const { top: listTop, bottom: listBottom } =
+            cardsRoom.getBoundingClientRect();
+          if (e.clientY < listTop) {
+            cardsRoom.prepend(marker);
+          }
+          if (e.clientY > listBottom) {
+            cardsRoom.appendChild(marker);
+          } else {
+            if (cardsRoom.childElementCount > 0) {
+              const items = Array.from(cardsRoom.childNodes);
+
+              for (const item of items) {
+                actualElement.style.display = "none";
+                const { top: itemTop, bottom: itemBottom } =
+                  item.getBoundingClientRect();
+                actualElement.style.display = "block";
+
+                if (e.clientY > itemTop) {
+                  cardsRoom.insertBefore(marker, item);
+                }
+
+                if (e.clientY < itemBottom) {
+                  cardsRoom.insertBefore(marker, item.nextSibling);
+                  break;
+                }
+              }
+            }
+          }
+        }
       }
     };
 
     const onMouseUpHandler = (e) => {
       actualElement.classList.remove("dragged");
 
-      elementBelow = document.elementFromPoint(e.clientX, e.clientY);
+      const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
 
       if (actualElement && elementBelow.closest(".trello-list")) {
-        elementBelow
+        const cardsRoom = elementBelow
           .closest(".list-content")
-          .querySelector(".cards-room")
-          .appendChild(actualElement);
+          .querySelector(".cards-room");
+        if (marker.parentNode === cardsRoom) {
+          cardsRoom.replaceChild(actualElement, marker);
+        }
+      }
+
+      if (marker) {
+        marker.remove();
       }
 
       actualElement.style.top = "";
       actualElement.style.left = "";
 
+      document.body.style.cursor = "default";
       actualElement = undefined;
+      marker = undefined;
       mouseDownX = 0;
       mouseDownY = 0;
 

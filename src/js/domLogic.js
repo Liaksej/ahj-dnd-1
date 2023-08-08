@@ -3,7 +3,6 @@ export class DomLogic {
     this.lists = document.querySelectorAll(".trello-list");
     this.headers = document.querySelectorAll(".list-header");
     this.addCardLinks = document.querySelectorAll(".open-card-composer");
-    this.cards = document.querySelectorAll(".cards-room");
   }
 
   headerEvents() {
@@ -119,33 +118,46 @@ export class DomLogic {
   cardDrag() {
     let actualElement;
 
+    let elementBelow;
+
     let mouseDownX = 0,
       mouseDownY = 0;
 
-    Array.from(this.cards).forEach((cardsContainer) => {
-      cardsContainer.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-        if (e.target.classList.contains("card")) {
-          actualElement = e.target;
-        }
-        if (e.target.closest(".card")) {
-          actualElement = e.target.closest(".card");
-        }
+    Array.from(document.querySelectorAll(".cards-room")).forEach(
+      (cardsContainer) => {
+        cardsContainer.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          if (e.target.classList.contains("card")) {
+            actualElement = e.target;
+          }
+          if (
+            !e.target.classList.contains("card") &&
+            e.target.closest(".card")
+          ) {
+            actualElement = e.target.closest(".card");
+          }
 
-        mouseDownX = e.clientX - actualElement.getBoundingClientRect().left;
-        mouseDownY = e.clientY - actualElement.getBoundingClientRect().top;
+          if (actualElement) {
+            mouseDownX =
+              e.clientX - actualElement?.getBoundingClientRect().left;
+            mouseDownY = e.clientY - actualElement?.getBoundingClientRect().top;
 
-        actualElement.classList.add("dragged");
+            actualElement.classList.add("dragged");
 
-        document.documentElement.addEventListener("mouseup", onMouseUpHandler);
-        document.documentElement.addEventListener(
-          "mousemove",
-          onMouseOverHandler,
-        );
-      });
-    });
+            document.documentElement.addEventListener(
+              "mouseup",
+              onMouseUpHandler,
+            );
+            document.documentElement.addEventListener(
+              "mousemove",
+              onMouseMoveHandler,
+            );
+          }
+        });
+      },
+    );
 
-    const onMouseOverHandler = (e) => {
+    const onMouseMoveHandler = (e) => {
       if (actualElement) {
         actualElement.style.top = `${e.clientY - mouseDownY}px`;
         actualElement.style.left = `${e.clientX - mouseDownX}px`;
@@ -153,14 +165,17 @@ export class DomLogic {
     };
 
     const onMouseUpHandler = (e) => {
-      if (e.target.closest(".trello-list")) {
-        e.target
-          .closest(".trello-list")
+      actualElement.classList.remove("dragged");
+
+      elementBelow = document.elementFromPoint(e.clientX, e.clientY);
+
+      if (actualElement && elementBelow.closest(".trello-list")) {
+        elementBelow
+          .closest(".list-content")
           .querySelector(".cards-room")
           .appendChild(actualElement);
       }
 
-      actualElement.classList.remove("dragged");
       actualElement.style.top = "";
       actualElement.style.left = "";
 
@@ -170,7 +185,7 @@ export class DomLogic {
 
       document.documentElement.removeEventListener(
         "mousemove",
-        onMouseOverHandler,
+        onMouseMoveHandler,
       );
       document.documentElement.removeEventListener("mouseup", onMouseUpHandler);
     };

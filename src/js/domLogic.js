@@ -26,6 +26,7 @@ export class DomLogic {
       const textarea = e.currentTarget.querySelector("textarea");
       textarea.classList.remove("noshow");
       textarea.focus();
+      textarea.value = e.currentTarget.querySelector("h2").textContent;
       e.currentTarget.querySelector("h2").classList.add("noshow");
 
       textarea.addEventListener("blur", textareaOnBlurEventHandler);

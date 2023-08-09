@@ -1,6 +1,6 @@
 .trello {
   height: 100vh;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   display: flex;
   align-items: start;
   padding: 15px;
@@ -22,9 +22,6 @@
   padding: 10px 0 0 10px;
   height: fit-content;
   min-height: 40px;
-  /*border-top-left-radius: 10px;*/
-  /*border-top-right-radius: 10px;*/
-  /*background-color: rgba(0, 0, 0, 0.2);*/
 }
 
 .list-header h2 {
@@ -32,7 +29,6 @@
   margin: 0;
   font-size: 14px;
   padding-left: 6px;
-  /*padding: 10px 0 0 10px;*/
   align-self: center;
   overflow-wrap: anywhere;
 }
@@ -42,14 +38,12 @@
   font-weight: bolder;
   box-sizing: border-box;
   padding-left: 5px;
-  /*padding: 10px 0 0 10px;*/
   width: 80%;
   vertical-align: top;
   resize: none;
   overflow-wrap: break-word;
   height: auto;
   align-self: center;
-  /*max-height: fit-content;*/
   overflow: hidden;
 }
 
@@ -95,8 +89,7 @@
 }
 
 .list-card {
-  padding: 10px 10px;
-  padding-bottom: 0;
+  padding: 10px 10px 0;
 }
 
 .list-card textarea {
@@ -111,8 +104,7 @@
 }
 
 .cc-controls-section {
-  padding: 10px;
-  padding-bottom: 0;
+  padding: 10px 10px 0;
   margin-bottom: -5px;
 }
 
@@ -157,10 +149,13 @@
 
 .card .cancel::before {
   position: absolute;
-  top: 4px;
+  top: 0;
   left: 255px;
   visibility: hidden;
   color: black;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #f7f7f7;
   content: " \2716 ";
 }
 

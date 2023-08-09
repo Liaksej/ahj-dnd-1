@@ -41,8 +41,8 @@ export class DomLogic {
       header.addEventListener("click", headerOnEventHandler),
     );
 
-    const allTextareas = document.querySelectorAll("textarea");
-    Array.from(allTextareas).forEach((textarea) =>
+    const allTextAreas = document.querySelectorAll("textarea");
+    Array.from(allTextAreas).forEach((textarea) =>
       textarea.addEventListener("input", autoResizeHandler),
     );
   }
@@ -279,7 +279,7 @@ export class DomLogic {
     };
   }
 
-  _cardCreator(list, text) {
+  _cardCreator(currentList, text) {
     const card = document.createElement("div");
     card.classList.add("card");
     card.innerHTML = `
@@ -294,6 +294,65 @@ export class DomLogic {
         </button>
         <div class="list-card-members js-list-card-members js-list-draggable-card-members"></div>
       </div>`;
-    list.appendChild(card);
+    currentList.appendChild(card);
+  }
+
+  saveToLocalStorage() {
+    window.addEventListener("beforeunload", () => {
+      const kanbanData = {};
+
+      let listCount = 0;
+
+      this.lists.forEach((list) => {
+        const listName = listCount++;
+        const listHeader = list.querySelector(
+          ".list-header-name-assist",
+        ).textContent;
+        if (listHeader.trim()) {
+          kanbanData[`${listName}`] = { header: listHeader };
+        }
+
+        const cardsRoom = list.querySelector(".cards-room");
+        if (cardsRoom.childElementCount > 0) {
+          const cards = cardsRoom.querySelectorAll(".card");
+          const listOfCardsNames = [];
+          Array.from(cards).forEach((card) => {
+            listOfCardsNames.push(
+              card.querySelector(".list-card-title").textContent,
+            );
+          });
+          kanbanData[`${listName}`].cards = listOfCardsNames;
+        }
+      });
+      localStorage.setItem("kanbanData", JSON.stringify(kanbanData));
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const json = localStorage.getItem("kanbanData");
+
+      let kanbanData;
+
+      try {
+        kanbanData = JSON.parse(json);
+      } catch (error) {
+        console.log(error);
+      }
+
+      if (kanbanData) {
+        Object.keys(kanbanData).forEach((key) => {
+          const currentList = Array.from(this.lists)[+key];
+          if (kanbanData[key].header) {
+            currentList.querySelector(".list-header-name-assist").textContent =
+              kanbanData[key].header;
+          }
+          if (kanbanData[key].cards) {
+            const cardsRoom = currentList.querySelector(".cards-room");
+            kanbanData[key].cards.forEach((card) => {
+              this._cardCreator(cardsRoom, card.trim());
+            });
+          }
+        });
+      }
+    });
   }
 }

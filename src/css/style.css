@@ -1,5 +1,9 @@
+body {
+  margin: 0;
+}
+
 .trello {
-  height: 100vh;
+  height: calc(100vh - 30px);
   font-family: Helvetica, Arial, sans-serif;
   display: flex;
   align-items: start;
@@ -161,8 +165,13 @@
 
 .card:hover .cancel::before {
   visibility: visible;
+  cursor: pointer;
 }
 
 .card:hover {
   background-color: #f7f7f7;
+}
+
+button {
+  cursor: pointer;
 }

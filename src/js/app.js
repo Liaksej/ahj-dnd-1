@@ -6,6 +6,7 @@ function app() {
   domLogic.addCardEvents();
   domLogic.cardDrag();
   domLogic.cardRemove();
+  domLogic.saveToLocalStorage();
 }
 
 app();

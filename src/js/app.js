@@ -5,6 +5,7 @@ function app() {
   domLogic.headerEvents();
   domLogic.addCardEvents();
   domLogic.cardDrag();
+  domLogic.cardRemove();
 }
 
 app();

@@ -1,4 +1,5 @@
 .trello {
+  height: 100vh;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   display: flex;
   align-items: start;
@@ -30,6 +31,7 @@
   width: 80%;
   margin: 0;
   font-size: 14px;
+  padding-left: 6px;
   /*padding: 10px 0 0 10px;*/
   align-self: center;
   overflow-wrap: anywhere;
@@ -37,14 +39,18 @@
 
 .list-header textarea {
   font-size: 14px;
+  font-weight: bolder;
   box-sizing: border-box;
-  padding: 10px 0 0 10px;
+  padding-left: 5px;
+  /*padding: 10px 0 0 10px;*/
   width: 80%;
+  vertical-align: top;
   resize: none;
   overflow-wrap: break-word;
   height: auto;
+  align-self: center;
   /*max-height: fit-content;*/
-  overflow: auto;
+  overflow: hidden;
 }
 
 .noshow {
@@ -68,9 +74,12 @@
   box-shadow: 3px 3px 3px #dddddd;
 }
 
+.card {
+  box-sizing: border-box;
+}
+
 #dragMarker {
   background-color: darkgrey;
-  box-shadow: unset;
   box-shadow: unset;
 }
 
@@ -121,7 +130,7 @@
 }
 
 .finish-add-card-btn .cancel-btn::before {
-  color: gray;
+  color: black;
   content: " \2716 ";
 }
 
@@ -130,4 +139,35 @@
   position: absolute;
   box-shadow: unset;
   cursor: grab;
+}
+
+.list-card-title {
+  overflow-wrap: break-word;
+}
+
+.list-card-details {
+  position: relative;
+}
+
+.card .cancel {
+  visibility: hidden;
+  top: -21px;
+  left: 255px;
+}
+
+.card .cancel::before {
+  position: absolute;
+  top: 4px;
+  left: 255px;
+  visibility: hidden;
+  color: black;
+  content: " \2716 ";
+}
+
+.card:hover .cancel::before {
+  visibility: visible;
+}
+
+.card:hover {
+  background-color: #f7f7f7;
 }

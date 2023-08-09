@@ -40,7 +40,7 @@ export class DomLogic {
       header.addEventListener("click", headerOnEventHandler),
     );
 
-    const allTextareas = document.querySelector("textarea");
+    const allTextareas = document.querySelectorAll("textarea");
     Array.from(allTextareas).forEach((textarea) =>
       textarea.addEventListener("input", autoResizeHandler),
     );
@@ -48,7 +48,7 @@ export class DomLogic {
 
   addCardEvents() {
     const textareaOnBlurEventHandler = (e) => {
-      if (e.type === "blur" || (e.type === "keydown" && e.key === "Escape")) {
+      if (e.type === "blur") {
         if (e.target.value.trim()) {
           this._cardCreator(
             e.target.closest(".list-cards").firstElementChild,
@@ -65,6 +65,19 @@ export class DomLogic {
           .closest(".list-content")
           .querySelector(".finish-add-card-btn")
           .classList.add("noshow");
+      }
+    };
+    const textareaOnKeyEventHandler = (e) => {
+      if (e.key === "Escape") {
+        e.target.value = "";
+        e.currentTarget.blur();
+      }
+
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (e.target.value.trim()) {
+          addCardButtonEventHandler(e);
+        }
       }
     };
     const addCardLinkHandler = (e) => {
@@ -85,7 +98,7 @@ export class DomLogic {
       textarea.focus();
 
       textarea.addEventListener("blur", textareaOnBlurEventHandler);
-      textarea.addEventListener("keydown", textareaOnBlurEventHandler);
+      textarea.addEventListener("keydown", textareaOnKeyEventHandler);
     };
 
     Array.from(this.addCardLinks).forEach((addCardLink) => {
@@ -115,6 +128,15 @@ export class DomLogic {
     });
   }
 
+  cardRemove() {
+    document.addEventListener("click", (event) => {
+      if (event.target.classList.contains("cancel")) {
+        const cardForRemove = event.target.closest(".card");
+        cardForRemove.remove();
+      }
+    });
+  }
+
   cardDrag() {
     let actualElement;
     let marker;
@@ -125,10 +147,15 @@ export class DomLogic {
     Array.from(document.querySelectorAll(".cards-room")).forEach(
       (cardsContainer) => {
         cardsContainer.addEventListener("mousedown", (e) => {
-          e.preventDefault();
+          // Check if the target is cancel button
+          if (e.target.classList.contains("cancel")) {
+            return;
+          }
+
           if (e.target.classList.contains("card")) {
             actualElement = e.target;
           }
+
           if (
             !e.target.classList.contains("card") &&
             e.target.closest(".card")
@@ -262,15 +289,8 @@ export class DomLogic {
         <span class="list-card-title js-card-name" dir="auto">
           <span class="card-short-id hide"></span>${text}
         </span>
-        <div class="badges">
-          <span class="js-badges"></span>
-          <span class="custom-field-front-badges js-custom-field-badges">
-            <span></span>
-          </span>
-          <span class="js-plugin-badges">
-            <span></span>
-          </span>
-        </div>
+        <button class="cancel">X
+        </button>
         <div class="list-card-members js-list-card-members js-list-draggable-card-members"></div>
       </div>`;
     list.appendChild(card);

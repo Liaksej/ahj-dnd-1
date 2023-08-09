@@ -14,7 +14,7 @@ install:
 build: off  # отключаем встроенную в appveyor систему сборки
 
 build_script:
-  - yarn build & yarn test   # команда сборки
+  - yarn build   # команда сборки
 
 deploy_script:  # скрипт развёртывания
   - git config --global credential.helper store

@@ -141,7 +141,7 @@ export class DomLogic {
   cardDrag() {
     let actualElement;
     let marker;
-    let elementAfterActualElement;
+    let lastCardsRoom = null;
 
     let mouseDownX = 0,
       mouseDownY = 0;
@@ -164,10 +164,6 @@ export class DomLogic {
           ) {
             actualElement = e.target.closest(".card");
           }
-
-          const cardsRoom = e.target
-            ?.closest(".list-content")
-            ?.querySelector(".cards-room");
 
           marker = document.createElement("div");
           marker.id = "dragMarker";
@@ -195,7 +191,6 @@ export class DomLogic {
     const onMouseMoveHandler = (e) => {
       e.preventDefault();
 
-      elementAfterActualElement = actualElement.nextElementSibling;
       actualElement.insertAdjacentElement("beforebegin", marker);
       actualElement.classList.add("dragged");
       document.body.appendChild(actualElement);
@@ -212,19 +207,23 @@ export class DomLogic {
           ?.closest(".list-content")
           ?.querySelector(".cards-room");
 
+        if (cardsRoom) {
+          lastCardsRoom = cardsRoom;
+        }
+
         actualElement.style.pointerEvents = "auto";
 
-        if (cardsRoom) {
+        if (lastCardsRoom) {
           const { top: listTop, bottom: listBottom } =
-            cardsRoom.getBoundingClientRect();
+            lastCardsRoom.getBoundingClientRect();
           if (e.clientY < listTop) {
-            cardsRoom.prepend(marker);
+            lastCardsRoom.prepend(marker);
           }
           if (e.clientY > listBottom) {
-            cardsRoom.appendChild(marker);
+            lastCardsRoom.appendChild(marker);
           }
-          if (cardsRoom.childElementCount > 0) {
-            const items = Array.from(cardsRoom.children);
+          if (lastCardsRoom?.childElementCount > 0) {
+            const items = Array.from(lastCardsRoom.children);
 
             for (const item of items) {
               const {
@@ -233,7 +232,7 @@ export class DomLogic {
                 height: itemHeight,
               } = item.getBoundingClientRect();
 
-              if (!cardsRoom.contains(actualElement) && item !== marker) {
+              if (!lastCardsRoom.contains(actualElement) && item !== marker) {
                 if (e.clientY < itemTop + itemHeight) {
                   marker.style.display = "none";
                   item.insertAdjacentElement("beforebegin", marker);
@@ -250,18 +249,11 @@ export class DomLogic {
       }
     };
 
-    const onMouseUpHandler = (e) => {
+    const onMouseUpHandler = () => {
       actualElement.classList.remove("dragged");
 
-      const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
-
-      if (actualElement && elementBelow.closest(".trello-list")) {
-        const cardsRoom = elementBelow
-          .closest(".list-content")
-          .querySelector(".cards-room");
-        if (marker.parentNode === cardsRoom) {
-          cardsRoom.replaceChild(actualElement, marker);
-        }
+      if (marker.parentNode === lastCardsRoom) {
+        lastCardsRoom.replaceChild(actualElement, marker);
       }
 
       if (marker) {
@@ -271,7 +263,7 @@ export class DomLogic {
       actualElement.style.top = "";
       actualElement.style.left = "";
 
-      document.body.style.cursor = "default";
+      document.body.style.cursor = "";
       actualElement = undefined;
       marker = undefined;
       mouseDownX = 0;

@@ -141,6 +141,7 @@ export class DomLogic {
   cardDrag() {
     let actualElement;
     let marker;
+    let elementAfterActualElement;
 
     let mouseDownX = 0,
       mouseDownY = 0;
@@ -176,10 +177,7 @@ export class DomLogic {
             mouseDownX = e.clientX - actualElement.getBoundingClientRect().left;
             mouseDownY = e.clientY - actualElement.getBoundingClientRect().top;
 
-            document.body.style.cursor = "grab";
-
-            actualElement.classList.add("dragged");
-            cardsRoom.insertBefore(marker, actualElement);
+            document.body.style.cursor = "grabbing";
 
             document.documentElement.addEventListener(
               "mouseup",
@@ -196,6 +194,11 @@ export class DomLogic {
 
     const onMouseMoveHandler = (e) => {
       e.preventDefault();
+
+      elementAfterActualElement = actualElement.nextElementSibling;
+      actualElement.insertAdjacentElement("beforebegin", marker);
+      actualElement.classList.add("dragged");
+      document.body.appendChild(actualElement);
 
       if (actualElement) {
         actualElement.style.top = `${e.clientY - mouseDownY}px`;
@@ -219,22 +222,25 @@ export class DomLogic {
           }
           if (e.clientY > listBottom) {
             cardsRoom.appendChild(marker);
-          } else {
-            if (cardsRoom.childElementCount > 0) {
-              const items = Array.from(cardsRoom.childNodes);
+          }
+          if (cardsRoom.childElementCount > 0) {
+            const items = Array.from(cardsRoom.children);
 
-              for (const item of items) {
-                actualElement.style.display = "none";
-                const { top: itemTop, bottom: itemBottom } =
-                  item.getBoundingClientRect();
-                actualElement.style.display = "block";
+            for (const item of items) {
+              const {
+                top: itemTop,
+                bottom: itemBottom,
+                height: itemHeight,
+              } = item.getBoundingClientRect();
 
-                if (e.clientY > itemTop) {
-                  cardsRoom.insertBefore(marker, item);
-                }
-
-                if (e.clientY < itemBottom) {
-                  cardsRoom.insertBefore(marker, item.nextSibling);
+              if (!cardsRoom.contains(actualElement) && item !== marker) {
+                if (e.clientY < itemTop + itemHeight) {
+                  marker.style.display = "none";
+                  item.insertAdjacentElement("beforebegin", marker);
+                  marker.style.display = "";
+                  break;
+                } else if (e.clientY < itemBottom + itemHeight) {
+                  item.insertAdjacentElement("afterend", marker);
                   break;
                 }
               }

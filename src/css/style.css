@@ -131,10 +131,10 @@ body {
 }
 
 .dragged {
-  width: 270px;
+  width: 280px;
   position: absolute;
   box-shadow: unset;
-  cursor: grab;
+  cursor: grabbing;
 }
 
 .list-card-title {
